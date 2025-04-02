@@ -2,23 +2,30 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .data import *
 
-
-def main(request):
-    return HttpResponse("""
-<h1>Barbershop</h1>
-<p>We are the best barbershop in the world!</p>""")
-
-
-def master_detail(request, master_id):
-    try:
-        master = [m for m in masters if m['id'] ==  master_id][0]
-    except IndexError:
-        return HttpResponse('Мастер не найден')
-    return HttpResponse(f'<h1>{master["name"]}</h1>')
+def landing(request):
+    context = {
+        'masters': masters,
+        'services': services
+    }
+    return render(request, 'landing.html', context)
 
 def thanks(request):
     masters_count = len(masters)
     context = {
         'masters_count': masters_count
     }
-    return render(request, 'thanks.html', context)
+    return render(request, 'core/thanks.html', context)
+
+def orders_list(request):
+    context = {
+        'orders': orders
+    }
+    return render(request, 'core/orders_list.html', context)
+
+def order_detail(request, order_id: int):
+    try:
+        order = [o for o in orders if o['id'] == order_id][0]
+    except IndexError:
+        # Если заказ не найден , возвращаем 404
+        return HttpResponse(status=404)
+    return render(request, 'core/order_detail.html', {'order': order})
