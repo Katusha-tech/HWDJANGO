@@ -1,0 +1,22 @@
+{% comment %} карточка заявки в include {% endcomment%}
+<div class="card h-100">
+    <h5 class="card-title text-center p-2">Заявка №{{order.id}}</h5>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{order.client_name}}</li>
+        <li class="list-group-item">{{order.date}}</li>
+        <li class="list-group-item">{{order.status}}</li>
+        <li class="list-group-item">
+            <ul>
+                {% for service in order.services %}
+                <li>{{service}}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+    <div class="card-footer mt-auto">
+        {% comment %} 
+        <a href="/barbershop/orders/{{order.id}}/" class="btn btn-dark">Подробнее</a>{% endcomment %}
+        {% comment %} Кнопка с псевдонимом 'orders/<int:order_id>/', order_detail,  {% endcomment %}
+        <a href="{% url 'order_detail' order.id %}" class="btn btn-dark">Подробнее</a>
+    </div>
+</div>
