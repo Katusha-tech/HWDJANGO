@@ -5,23 +5,20 @@ from .data import *
 def landing(request):
     context = {
         'masters': masters,
-        'services': services,
-        'menu_items': MENU_ITEMS
+        'services': services
     }
     return render(request, 'core/landing.html', context)
 
 def thanks(request):
     masters_count = len(masters)
     context = {
-        'masters_count': masters_count, 
-        'menu_items': MENU_ITEMS
+        'masters_count': masters_count
     }
     return render(request, 'core/thanks.html', context)
 
 def orders_list(request):
     context = {
-        'orders': orders,
-        'menu_items': MENU_ITEMS
+        'orders': orders
     }
     return render(request, 'core/orders_list.html', context)
 
