@@ -4,6 +4,7 @@ from .data import *
 
 def landing(request):
     context = {
+        'title':'Главная - Барбершоп Зигзаг удачи',
         'masters': masters,
         'services': services
     }

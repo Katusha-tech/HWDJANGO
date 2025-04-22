@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-        <div class="d-flex justify-content-center">
-        <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">&#x1F338;Спасибо!</h4>
+<section class="py-5 zigzag-section text-center">
+    <div class="container">
+        <div class="alert alert-light border border-danger shadow-sm p-5">
+            <h2 class="text-danger fw-bold mb-4">СПАСИБО!</h2>
+            <p class="lead">
+                Ваша заявка принята. Один из <strong>{{ masters_count }}</strong> мастеров будет рад принять вас в ближайшее время.
+            </p>
             <hr>
-            <p class="mb-0">Ваша заявка принята. Один из {{masters_count}} мастеров будет рад принять вас в ближайшее время!</p>
+            <p class="text-muted small">Вы сделали правильный выбор — ведь «Зигзаг Удачи» не подводит!</p>
         </div>
     </div>
+</section>
+
 {% endblock %}
