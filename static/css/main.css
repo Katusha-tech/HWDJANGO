@@ -83,3 +83,18 @@ main {
     background-color: #fdfaf4;
     font-family: 'Oswald', sans-serif;
   }
+
+
+  .zigzag-section {
+    background-color: #fdfaf4;
+    font-family: 'Oswald', sans-serif;
+}
+
+.card {
+    border-width: 2px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}

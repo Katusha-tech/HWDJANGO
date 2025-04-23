@@ -2,16 +2,30 @@
 
 {% block content %}
 <section class="py-5 zigzag-section text-center">
-    <div class="container">
+
         <div class="alert alert-light border border-danger shadow-sm p-5">
             <h2 class="text-danger fw-bold mb-4">СПАСИБО!</h2>
             <p class="lead">
                 Ваша заявка принята. Один из <strong>{{ masters_count }}</strong> мастеров будет рад принять вас в ближайшее время.
             </p>
             <hr>
-            <p class="text-muted small">Вы сделали правильный выбор — ведь «Зигзаг Удачи» не подводит!</p>
+            <p class="text-muted small mb-3">Вы сделали правильный выбор — ведь «Зигзаг Удачи» не подводит!</p>
+            <p class="mt-4">Вы будете перенаправлены на главную через <span id="countdown" class="fw-bold text-danger">7</span> секунд.</p>
+            <a href="{% url 'landing' %}" class="btn btn-outline-danger mt-3">Вернуться сейчас</a>
         </div>
-    </div>
 </section>
 
+<script>
+    let seconds = 7;
+    const countdown = document.getElementById('countdown');
+
+    const timer = setInterval(() => {
+        seconds--;
+        countdown.textContent = seconds;
+        if (seconds <= 0) {
+            clearInterval(timer);
+            window.location.href = "{% url 'landing' %}";
+        }
+    }, 1000);
+</script>
 {% endblock %}
