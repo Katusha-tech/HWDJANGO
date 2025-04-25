@@ -3,11 +3,8 @@
     <div class="card border-danger shadow-sm h-100">
         <div class="card-body d-flex flex-column">
             <h5 class="card-title fw-bold text-danger">{{ order.client_name }}</h5>
-            <p class="card-text mb-1">
-                <strong>Дата:</strong> {{ order.date }}
-            </p>
-            <p class="card-text mb-1">
-                <strong>Услуги:</strong>
+            <p class="card-text mb-1"><strong>Дата:</strong> {{ order.date }}</p>
+            <p class="card-text mb-1"><strong>Услуги:</strong>
                 {{ order.services|join:", " }}
             </p>
             <p class="card-text mb-3">
@@ -20,7 +17,9 @@
                     {{ order.status|title }}
                 </span>
             </p>
-            <a href="{% url 'order_detail' order.id %}" class="btn btn-outline-danger mt-auto">Подробнее</a>
+            <div class="text-center mt-auto">
+                <a href="{% url 'order_detail' order.id %}" class="btn btn-outline-danger">Подробнее</a>
+            </div>
         </div>
     </div>
 </div>

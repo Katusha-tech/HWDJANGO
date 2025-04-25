@@ -2,37 +2,40 @@
 {% load static %}
 {% block content %}
 <section class="py-5 zigzag-section">
-        <div class="card border-danger shadow-sm mx-auto" style="max-width: 700px;">
-            <div class="card-body">
-                <h3 class="card-title text-danger fw-bold mb-4">Заявка №{{ order.id }}</h3>
-
-                <p class="mb-2"><strong>Клиент:</strong> {{ order.client_name }}</p>
-                <p class="mb-2"><strong>Дата записи:</strong> {{ order.date }}</p>
-                <p class="mb-2">
-                    <strong>Статус:</strong>
-                    <span class="badge {% if order.status == 'новая' %}bg-warning text-dark
-                                    {% elif order.status == 'подтвержденная' %}bg-primary
-                                    {% elif order.status == 'выполненная' %}bg-success
-                                    {% elif order.status == 'отмененная' %}bg-secondary
-                                    {% endif %}">
-                        {{ order.status|title }}
-                    </span>
-                </p>
-
-                <div class="mt-4">
-                    <h5 class="text-dark fw-bold">Выбранные услуги:</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for service in order.services %}
-                        <li class="list-group-item">{{ service }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <div class="mt-4 text-center">
-                    <a href="{% url 'orders_list' %}" class="btn btn-danger">← Вернуться к заявкам</a>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5">
+                <div class="card border-danger shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-danger fw-bold mb-4">Заявка №{{ order.id }}</h3>
+                        <p class="mb-2"><strong>Клиент:</strong> {{ order.client_name }}</p>
+                        <p class="mb-2"><strong>Дата записи:</strong> {{ order.date }}</p>
+                        <p class="mb-2">
+                            <strong>Статус:</strong>
+                            <span class="badge {% if order.status == 'новая' %}bg-warning text-dark
+                                                {% elif order.status == 'подтвержденная' %}bg-primary
+                                                {% elif order.status == 'выполненная' %}bg-success
+                                                {% elif order.status == 'отмененная' %}bg-secondary
+                                                {% endif %}">
+                                    {{ order.status|title }}
+                            </span>
+                        </p>
+                        <div class="mt-4">
+                            <h5 class="text-dark fw-bold">Выбранные услуги:</h5>
+                            <ul class="ps-4 list-group list-group-flush">
+                                {% for service in order.services %}
+                                    <li class="mb-2"> {{ service }} </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <a href="{% url 'orders_list' %}" class="btn btn-danger">← Вернуться к заявкам</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 {% endblock content %}
 {% block scripts %}

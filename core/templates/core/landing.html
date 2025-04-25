@@ -1,72 +1,70 @@
 {% extends "base.html"%}
 {% load static %}
 {% block content %}
+
+{% comment %}Секция "О нас"{% endcomment %}
 <section id="about" class="py-5 zigzag-section">
-      <h2 class="section-title">О НАС</h2>
-      <div class="row">
-        <div class="col-md-6">
-          <p>
-            Барбершоп "Зигзаг Удачи" — место, где стиль встречается с харизмой.
-            На рынке уже более 10 лет, мы уверенно держим бритву в руке и курс на успех.
-          </p>
-          <p>
-            Мы создаём образы, вдохновленные эстетикой советского кинематографа. У нас вы не просто подстрижетесь — вы получите опыт, достойный героя культового фильма.
-          </p>
-        </div>
-        <div class="col-md-6">
-          <ul class="list-unstyled">
-            <li>• Классический стиль и идеология</li>
-            <li>• Атмосфера советского фильма</li>
-            <li>• Опытные мастера и культура сервиса</li>
-          </ul>
-        </div>
+  <h2 class="section-title">О НАС</h2>
+  <div class = "section-content">
+    <div class="row">
+      <div class="col-md-6">
+        <p>
+          Барбершоп "Зигзаг Удачи" — место, где стиль встречается с харизмой.
+          На рынке уже более 10 лет, мы уверенно держим бритву в руке и курс на успех.
+        </p>
+        <p>
+          Мы создаём образы, вдохновленные эстетикой советского кинематографа. 
+          У нас вы не просто подстрижетесь — вы получите опыт, достойный героя культового фильма.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <ul class="list-unstyled">
+          <li>• Классический стиль и идеология</li>
+          <li>• Атмосфера советского фильма</li>
+          <li>• Опытные мастера и культура сервиса</li>
+        </ul>
       </div>
     </div>
-  </section>
-  
-  <section id="services" class="py-5 zigzag-section bg-light">
-    <div class="container">
-      <h2 class="section-title">УСЛУГИ</h2>
-      <div class="row">
-        {% for service in services %}
-          <div class="col-md-6 mb-3">
-            <div class="p-3 border border-danger rounded text-dark bg-white">
-              <strong>{{ service }}</strong>
-            </div>
+  </div>
+</section>
+{% comment %}Секция "Услуги"{% endcomment %}
+<section id="services" class="py-5 zigzag-section bg-light">
+  <h2 class="section-title">УСЛУГИ</h2>
+  <div class="section-content">
+    <div class="row">
+      {% for service in services %}
+        <div class="col-md-6 mb-3">
+          <div class="p-3 border border-danger rounded text-dark bg-white">
+            <strong>{{ service }}</strong>
           </div>
-        {% endfor %}
-      </div>
+        </div>
+      {% endfor %}
     </div>
-  </section>
-  
-  <section id="masters" class="py-5 zigzag-section">
-    <div class="container">
-      <h2 class="section-title">НАШИ МАСТЕРА</h2>
-      <div class="row">
-        {% for master in masters %}
-          <div class="col-md-4 mb-4">
-            <div class="card text-center border-0 shadow" style="background-color: #f5f0e6;">
-              <div class="card-img-top bg-secondary" style="height: 200px;">
-                <!-- Место под фото -->
-              </div>
-              <div class="card-body">
-                <h5 class="card-title text-danger">{{ master.name }}</h5>
-                <p class="card-text">Мастер-стилист с легендарным подходом.</p>
-              </div>
-            </div>
+  </div>
+</section>
+{% comment %}Секция "Мастера"{% endcomment %}
+<section id="masters" class="py-5 zigzag-section">
+  <h2 class="section-title">НАШИ МАСТЕРА</h2>
+  <div class="row">
+    {% for master in masters %}
+      <div class="col-md-4 mb-4">
+        <div class="card text-center bg-master master-card">
+          <div class="card-img-top placeholder-photo">
+            <img src="{% static master.photo %}" alt="{{ master.name }}" class="img-fluid rounded-top">
           </div>
-        {% endfor %}
+          <div class="card-body">
+            <h5 class="card-title text-danger">{{ master.name }}</h5>
+            <p class="card-text">Мастер-стилист с легендарным подходом.</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-  
-  <section id="booking" class="py-5 zigzag-section bg-light text-center">
-    <div class="container">
-      <h2 class="section-title">ЗАПИСЬ</h2>
-      <p>Скоро вы сможете записаться онлайн. Следите за новостями!</p>
-      <a href="#" class="btn btn-danger btn-lg mt-3 disabled">Записаться</a>
-    </div>
-  </section>
-
-
+    {% endfor %}
+  </div>
+</section>
+{% comment %}Секция "Записаться"{% endcomment %}
+<section id="booking" class="py-5 zigzag-section bg-light text-center">
+  <h2 class="section-title">ЗАПИСЬ</h2>
+  <p>Скоро вы сможете записаться онлайн. Следите за новостями!</p>
+  <a href="#" class="btn btn-danger btn-lg mt-3 disabled">Записаться</a>
+</section>
 {% endblock content %}

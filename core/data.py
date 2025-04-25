@@ -15,11 +15,12 @@ MENU_ITEMS = [
 
 
 masters = [
-    {"id": 1, "name": "Эльдар 'Бритва' Рязанов"},
-    {"id": 2, "name": "Зоя 'Ножницы' Космодемьянская"},
-    {"id": 3, "name": "Борис 'Фен' Пастернак"},
-    {"id": 4, "name": "Иннокентий 'Лак' Смоктуновский"},
-    {"id": 5, "name": "Раиса 'Бигуди' Горбачёва"},
+    {"id": 1, "name": "Эльдар 'Бритва' Рязанов", "photo": "images/masters/Ryazanov.jpg"},
+    {"id": 2, "name": "Людмила 'Ножницы' Гурченко", "photo": "images/masters/Gurchenko.jpg"},
+    {"id": 3, "name": "Георгий 'Фен' Данелия", "photo": "images/masters/Daneliya.jpg"},
+    {"id": 4, "name": "Иннокентий 'Лак' Смоктуновский", "photo": "images/masters/Smoktunovskii.jpg"},
+    {"id": 5, "name": "Рина 'Бигуди' Зеленая", "photo": "images/masters/Zelenay.jpg"},
+    {"id": 6, "name": "Юрий 'Расческа' Никулин", "photo": "images/masters/Nikulin.jpg"},
 ]
 
 # Список возможных услуг барбершопа
