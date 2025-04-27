@@ -6,10 +6,22 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#about">О нас</a></li>
-        <li class="nav-item"><a class="nav-link" href="#services">Услуги</a></li>
-        <li class="nav-item"><a class="nav-link" href="#masters">Мастера</a></li>
-        <li class="nav-item"><a class="nav-link" href="#booking">Запись</a></li>
+        {% for item in menu_items %}
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url item.url_name %}">{{ item.name }}</a>
+        </li>
+        {% endfor %}
+
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'landing' %}#about">О нас</a></li>
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'landing' %}#services">Услуги</a></li>
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'landing' %}#masters">Мастера</a></li>
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'landing' %}#booking">Запись</a></li>
+        {% comment %} Кнопка войти в админку для пользователей is_staff {% endcomment %}
+        {% if user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/">Админка</a>
+        {% endif %}
+        </li>
       </ul>
     </div>
   </div>

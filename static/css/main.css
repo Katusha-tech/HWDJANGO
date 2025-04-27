@@ -46,7 +46,6 @@ main {
 }
 
 .footer h5 {
-  color: #ffd700;
   margin-bottom: 1.5rem;
   font-family: "Oswald", sans-serif;
 }
@@ -57,7 +56,6 @@ main {
 
 .footer i {
   margin-right: 0.5rem;
-  color: #ffd700;
 }
 
 /* Стили для карты */
@@ -88,6 +86,17 @@ main {
   max-width: 1140px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.about-building-img {
+  max-width: 250px;
+  object-fit: contain;
+}
+
+.about-quote {
+  font-style: italic;
+  color: #6c757d;
+  font-size: 1.1rem;
 }
 
 .master-card {
@@ -133,6 +142,7 @@ main {
 }
 
 /* Стиль для карточки заказов */
+
 .order-detail-card {
   max-width: 500px;
   width: 50%;

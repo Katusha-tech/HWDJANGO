@@ -5,25 +5,34 @@
 {% comment %}Секция "О нас"{% endcomment %}
 <section id="about" class="py-5 zigzag-section">
   <h2 class="section-title">О НАС</h2>
-  <div class = "section-content">
-    <div class="row">
-      <div class="col-md-6">
+  <div class="section-content">
+    <div class="row align-items-center">
+      <div class="col-md-5 mb-4 mb-md-0">
+        <div class="text-start">
+          <img src="{% static 'images/building.png' %}" alt="building" class="img-fluid rounded shadow-sm about-building-img">
+        </div>
+      </div>
+      <div class="col-md-7">
         <p>
-          Барбершоп "Зигзаг Удачи" — место, где стиль встречается с харизмой.
+          Барбершоп <strong>"Зигзаг Удачи"</strong> — место, где стиль встречается с харизмой. 
           На рынке уже более 10 лет, мы уверенно держим бритву в руке и курс на успех.
         </p>
         <p>
           Мы создаём образы, вдохновленные эстетикой советского кинематографа. 
           У нас вы не просто подстрижетесь — вы получите опыт, достойный героя культового фильма.
         </p>
-      </div>
-      <div class="col-md-6">
-        <ul class="list-unstyled">
-          <li>• Классический стиль и идеология</li>
-          <li>• Атмосфера советского фильма</li>
-          <li>• Опытные мастера и культура сервиса</li>
+        <ul class="list-unstyled fs-6 mb-4">
+          <li><i class="bi bi-film me-2 text-danger"></i>Атмосфера советского кино</li>
+          <li><i class="bi bi-scissors me-2 text-danger"></i>Опытные мастера с характером</li>
+          <li><i class="bi bi-star me-2 text-danger"></i>Стрижём, как снимаем — одним дублем</li>
         </ul>
       </div>
+    </div>
+    <div class="text-center mt-5 col-12">
+      <blockquote class="about-quote text-center">
+        «Главное — чтобы костюмчик сидел. И причёска, конечно.»
+        <footer class="mt-1 text-danger">— из фильма «Зигзаг Удачи»</footer>
+      </blockquote>
     </div>
   </div>
 </section>
