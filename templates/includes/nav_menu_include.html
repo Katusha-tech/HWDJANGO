@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-light zigzag-navbar">
+  <div class="container">
+    <a class="navbar-brand text-danger fw-bold" href="{% url 'landing' %}">ЗИГЗАГ УДАЧИ</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        {% for item in menu_items %}
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url item.url_name %}">{{ item.name }}</a>
+        </li>
+        {% endfor %}
+
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'landing' %}#about">О нас</a></li>
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'landing' %}#services">Услуги</a></li>
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'landing' %}#masters">Мастера</a></li>
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'landing' %}#booking">Запись</a></li>
+        {% comment %} Кнопка войти в админку для пользователей is_staff {% endcomment %}
+        {% if user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/">Админка</a>
+        {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

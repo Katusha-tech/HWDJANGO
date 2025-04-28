@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .data import * 
+from django.contrib.auth.decorators import login_required
 
 def landing(request):
     context = {
@@ -17,12 +18,14 @@ def thanks(request):
     }
     return render(request, 'core/thanks.html', context)
 
+@login_required
 def orders_list(request):
     context = {
         'orders': orders
     }
     return render(request, 'core/orders_list.html', context)
 
+@login_required
 def order_detail(request, order_id: int):
     try:
         order = [o for o in orders if o['id'] == order_id][0]
