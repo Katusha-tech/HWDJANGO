@@ -4,3 +4,8 @@ db.sqlite3
 *__pycache__
 *.pyc
 .env
+notes/images/*
+media/images/services/*
+
+db.sqlite3-wal
+db.sqlite3-shm
