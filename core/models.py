@@ -9,6 +9,9 @@ class Service(models.Model):
     is_popular = models.BooleanField(default=False, verbose_name="Популярная услуга")
     image = models.ImageField(upload_to="services/", blank=True, verbose_name="Изображение")
 
+    def __str__(self):
+        return self.name
+
 # Мастера
 class Master(models.Model):
     name = models.CharField(max_length=150, verbose_name="Имя")
@@ -18,6 +21,9 @@ class Master(models.Model):
     experience = models.PositiveIntegerField(verbose_name="Стаж работы", help_text="Опыт работы в годах")
     services = models.ManyToManyField("Service", related_name="masters", verbose_name="Услуги")
     is_active = models.BooleanField(default=True, verbose_name="Активен")
+
+    def __str__(self):
+        return self.name
 
 # Заказы
 class Order(models.Model):
@@ -41,6 +47,9 @@ class Order(models.Model):
     services = models.ManyToManyField("Service", related_name="orders", verbose_name="Услуги")
     appointment_date = models.DateTimeField(blank=True, verbose_name="Дата записи", null=True)
 
+    def __str__(self):
+        return f"Заказ {self.id}: {self.client_name}"
+
 # Отзывы
 class Review(models.Model):
     RATING_CHOICES = [
@@ -57,6 +66,9 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES, verbose_name="Оценка")
     is_published = models.BooleanField(default=True, verbose_name="Опубликован")
+
+    def __str__(self):
+        return f"Отзыв от {self.client_name} о мастере {self.master.name}"
 
 
 
