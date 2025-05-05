@@ -1,13 +1,18 @@
 from django.shortcuts import render
+from .models import Master, Service, Review, Order
 from django.http import HttpResponse
 from .data import * 
 from django.contrib.auth.decorators import login_required
 
 def landing(request):
+    masters = Master.objects.all()
+    services = Service.objects.all()
+    reviews = Review.objects.all()
     context = {
         'title':'Главная - Барбершоп Зигзаг удачи',
         'masters': masters,
-        'services': services
+        'services': services,
+        'reviews': reviews
     }
     return render(request, 'core/landing.html', context)
 

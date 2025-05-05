@@ -141,7 +141,7 @@ main {
   font-family: 'Oswald', sans-serif;
 }
 
-/* Стиль для карточки заказов */
+/* Стили для карточки заказов */
 
 .order-detail-card {
   max-width: 500px;
@@ -149,3 +149,60 @@ main {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Стили для карточек отзывов */
+
+#reviews {
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow: hidden;
+}
+
+.review-container {
+  padding: 0 40px;
+  overflow: hidden;
+}
+
+#reviewsCarousel {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 90%;
+}
+
+#reviewsCarousel .carousel-item {
+  height: auto; 
+  min-height: 250px;
+  padding: 10px 30px; 
+}
+
+#reviewsCarousel .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+#reviewsCarousel .card-text {
+  flex-grow: 1;
+}
+
+#reviewsCarousel .card-footer {
+  margin-top: auto;
+}
+
+
+#reviews .carousel-item .d-flex {
+  padding: 1.5rem;
+}
+.carousel-item {
+  padding: 10px;
+}
+
+.review-card {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  min-height: 250px;
+  margin: 0 auto;
+}
+
+
+

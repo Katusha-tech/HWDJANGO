@@ -76,4 +76,47 @@
   <p>Скоро вы сможете записаться онлайн. Следите за новостями!</p>
   <a href="#" class="btn btn-danger btn-lg mt-3 disabled">Записаться</a>
 </section>
+{% comment %}Секция "Отзывы"{% endcomment %}
+<section id="reviews" class="py-5 zigzag-section bg-light">
+  <h2 class="section-title">ОТЗЫВЫ НАШИХ КЛИЕНТОВ</h2>
+  <div class="review-container">
+    <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for review in reviews %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="d-flex justify-content-center p-4">
+              <div class="card review-card bg-white text-dark border border-danger shadow-sm p-3">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-danger">{{ review.client_name }}</h5>
+                  <p class="card-text fst-italic flex-grow-1">«{{ review.text }}»</p>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <small class="text-muted">{{ review.master.name }}</small>
+                    <div class="text-warning">
+                      {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                        <i class="bi bi-star-fill"></i>
+                        {% else %}
+                          <i class="bi bi-star"></i>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      
+      <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-danger rounded-circle" aria-hidden="true"></span>
+        <span class="visually-hidden">Назад</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-danger rounded-circle" aria-hidden="true"></span>
+        <span class="visually-hidden">Вперёд</span>
+      </button>
+    </div>
+  </div>
+</section>
 {% endblock content %}
