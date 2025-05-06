@@ -37,14 +37,24 @@
   </div>
 </section>
 {% comment %}Секция "Услуги"{% endcomment %}
-<section id="services" class="py-5 zigzag-section bg-light">
-  <h2 class="section-title">УСЛУГИ</h2>
+<section id="services" class="py-5 zigzag-section">
+  <h2 class="section-title">Наши услуги</h2>
   <div class="section-content">
-    <div class="row">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
       {% for service in services %}
-        <div class="col-md-6 mb-3">
-          <div class="p-3 border border-danger rounded text-dark bg-white">
-            <strong>{{ service }}</strong>
+        <div class="col">
+          <div class="card h-100 border border-danger shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-danger d-flex justify-content-between align-items-center">
+                {{ service.name }}
+                  {% if service.is_popular %}
+                  <i class="bi bi-fire text-warning" title="Популярная услуга"></i>
+                  {% endif %}
+              </h5>
+              <p class="card-text text-muted mb-2">{{ service.description }}</p>
+              <p class="mt-auto fw-bold mb-1">Цена: {{ service.price }} ₽</p>
+              <small class="text-muted">Длительность: {{ service.duration }} мин.</small>
+            </div>
           </div>
         </div>
       {% endfor %}
@@ -54,9 +64,10 @@
 {% comment %}Секция "Мастера"{% endcomment %}
 <section id="masters" class="py-5 zigzag-section">
   <h2 class="section-title">НАШИ МАСТЕРА</h2>
-  <div class="row">
+  <div class="section-content">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for master in masters %}
-      <div class="col-md-4 mb-4">
+      <div class="col">
         <div class="card text-center bg-master master-card h-100">
           <div class="card-img-top placeholder-photo">
             {% if master.photo %}
@@ -68,7 +79,11 @@
           <div class="card-body d-flex flex-column">
             <h5 class="card-title text-danger">{{ master.name }}</h5>
             <p class="card-text">Мастер-стилист с легендарным подходом.</p>
-            <p class="card-text mt-auto"><i class="bi bi-stars text-warning"></i> Опыт работы: <strong>{{ master.experience }} {% if master.experience == 1 %}год{% elif master.experience > 1 and master.experience < 5 %}года{% else %}лет{% endif %}</strong></p>
+            <p class="card-text mt-auto">
+              <i class="bi bi-stars text-warning"></i> Опыт работы: 
+              <strong>{{ master.experience }} {% if master.experience == 1 %}год{% elif master.experience > 1 and master.experience < 5 %}года{% else %}лет{% endif %}
+              </strong>
+            </p>
           </div>
         </div>
       </div>
@@ -76,15 +91,17 @@
   </div>
 </section>
 {% comment %}Секция "Записаться"{% endcomment %}
-<section id="booking" class="py-5 zigzag-section bg-light text-center">
+<section id="booking" class="py-5 zigzag-section bg-light">
   <h2 class="section-title">ЗАПИСЬ</h2>
-  <p>Скоро вы сможете записаться онлайн. Следите за новостями!</p>
-  <a href="#" class="btn btn-danger btn-lg mt-3 disabled">Записаться</a>
+  <div class="section-content text-center">
+    <p>Скоро вы сможете записаться онлайн. Следите за новостями!</p>
+    <a href="#" class="btn btn-danger btn-lg mt-3 disabled">Записаться</a>
+  </div>
 </section>
 {% comment %}Секция "Отзывы"{% endcomment %}
-<section id="reviews" class="py-5 zigzag-section bg-light">
+<section id="reviews" class="py-5 zigzag-section">
   <h2 class="section-title">ОТЗЫВЫ НАШИХ КЛИЕНТОВ</h2>
-  <div class="review-container">
+  <div class="section-content">
     <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         {% for review in reviews %}
