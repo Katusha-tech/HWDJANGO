@@ -3,6 +3,77 @@
 <section class="py-5 zigzag-section">
     <div class="container-fluid px-4 px-md-5">
         <h2 class="text-center text-danger fw-bold mb-5">Журнал Заявок</h2>
+        {% comment %} Форма поиска {% endcomment %}
+        <form class="mb-4">
+            <div class="row g-2">
+                <div class="col-12 col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input 
+                            type="text"
+                            class="form-control"
+                            name="search"
+                            placeholder="Введите текст для поиска"
+                            value="{{ request.GET.search|default:'' }}"
+                        />
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 d-flex">
+                    <button type="submit" class="btn btn-danger btn-sm py-2">
+                        <i class="btn-lg mt-3"></i>Поиск
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Чекбоксы для выбора полей поиска -->
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="d-flex flex-wrap gap-3">
+                        <!--Чекбокс для телефона-->
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input" 
+                                type="checkbox" 
+                                id="searchPhone"
+                                name="search_in" 
+                                value="phone" {% if 'phone' in request.GET.search_in%}checked{% endif %}
+                            />
+                            <label class="form-check-label" for="searchPhone">
+                                <i class="bi bi-telephone me-1"></i> По телефону
+                            </label>
+                        </div>
+                        <!--Чекбокс для имени-->
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input" 
+                                type="checkbox" 
+                                id="searchName"
+                                name="search_in" 
+                                value="name" {% if not request.GET.search_in or 'name' in request.GET.search_in %}checked{% endif %}
+                            />
+                            <label class="form-check-label" for="searchName">
+                                <i class="bi bi-person me-1"></i> По имени
+                            </label>
+                        </div>
+                        <!--Чекбокс для статуса-->
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input" 
+                                type="checkbox"
+                                id="searchStatus" 
+                                name="search_in" 
+                                value="status" {% if 'status' in request.GET.search_in %}checked{% endif %}
+                            />
+                            <label class="form-check-label" for="searchStatus">
+                                <i class="bi bi-chat me-1"></i> По статусу
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         <p class="text-muted mb-4">
             Всего заказов: <span class="badge bg-dark">{{orders|length}}</span>
         </p>

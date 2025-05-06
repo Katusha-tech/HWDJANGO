@@ -35,7 +35,7 @@
                             <h5 class="text-dark fw-bold">Назначенный мастер:</h5>
                             <div class="d-flex align-items-center gap-3">
                                 {% if order.master.photo %}
-                                    <img src="{{ order.master.photo.url }}" class="rounded-circle" style="width: 64px; height: 64px; object-fit: cover;" alt="{{ order.master.name }}">
+                                    <img src="{{ order.master.photo.url }}" class="rounded" style="width: 64px; height: 64px; object-fit: cover;" alt="{{ order.master.name }}">
                                 {% endif %}
                                 <div>
                                     <p class="mb-0 fw-semibold">{{ order.master.name }}</p>
