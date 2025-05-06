@@ -8,6 +8,9 @@ def landing(request):
     masters = Master.objects.all()
     services = Service.objects.all()
     reviews = Review.objects.all()
+    for master in masters:
+        print(f"Master: {master.name}, Photo: {master.photo}")
+
     context = {
         'title':'Главная - Барбершоп Зигзаг удачи',
         'masters': masters,
@@ -25,6 +28,7 @@ def thanks(request):
 
 @login_required
 def orders_list(request):
+    orders = Order.objects.all().prefetch_related('services').order_by('-date_created')
     context = {
         'orders': orders
     }
@@ -33,8 +37,8 @@ def orders_list(request):
 @login_required
 def order_detail(request, order_id: int):
     try:
-        order = [o for o in orders if o['id'] == order_id][0]
-    except IndexError:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
         # Если заказ не найден , возвращаем 404
         return HttpResponse(status=404)
     return render(request, 'core/order_detail.html', {'order': order})

@@ -57,13 +57,18 @@
   <div class="row">
     {% for master in masters %}
       <div class="col-md-4 mb-4">
-        <div class="card text-center bg-master master-card">
+        <div class="card text-center bg-master master-card h-100">
           <div class="card-img-top placeholder-photo">
-            <img src="{% static master.photo %}" alt="{{ master.name }}" class="img-fluid rounded-top">
+            {% if master.photo %}
+              <img src="{{ master.photo.url }}" alt="{{ master.name }}" class="img-fluid rounded-top">
+            {% else %}
+              <img src="{% static 'images/default-master.png' %}" alt="{{ master.name }}" class="img-fluid rounded-top">
+            {% endif %}
           </div>
-          <div class="card-body">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-title text-danger">{{ master.name }}</h5>
             <p class="card-text">Мастер-стилист с легендарным подходом.</p>
+            <p class="card-text mt-auto"><i class="bi bi-stars text-warning"></i> Опыт работы: <strong>{{ master.experience }} {% if master.experience == 1 %}год{% elif master.experience > 1 and master.experience < 5 %}года{% else %}лет{% endif %}</strong></p>
           </div>
         </div>
       </div>

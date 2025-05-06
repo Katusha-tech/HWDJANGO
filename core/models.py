@@ -49,6 +49,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Заказ {self.id}: {self.client_name}"
+    
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
+        ordering = ["-date_created"]
 
 # Отзывы
 class Review(models.Model):
