@@ -61,7 +61,7 @@ def orders_list(request):
             else:
                 # Если нет совпадений по отображаемым значениям, 
                 # пробуем искать по коду статуса (для администраторов)
-                filters |= Q(status__icontains=search_query)
+                filters |= Q(status__icontains=search_query) 
 
         all_orders = all_orders.filter(filters)
 

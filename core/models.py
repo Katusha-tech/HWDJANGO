@@ -11,6 +11,12 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['price']),
+            models.Index(fields=['is_popular']),
+        ]
 
 # Мастера
 class Master(models.Model):
@@ -24,6 +30,12 @@ class Master(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['is_active']),
+            models.Index(fields=['experience']),
+        ]
 
 # Заказы
 class Order(models.Model):
@@ -54,6 +66,15 @@ class Order(models.Model):
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
         ordering = ["-date_created"]
+        indexes = [
+            models.Index(fields=['client_name']),
+            models.Index(fields=['phone']),
+            models.Index(fields=['status']),
+            models.Index(fields=['date_created']),
+            models.Index(fields=['status', 'appointment_date'], name='status_appointment_date_idx'),
+            models.Index(fields=['client_name', 'phone'], name='client_name_phone_idx'),
+        ]
+
 
 # Отзывы
 class Review(models.Model):
@@ -74,6 +95,15 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Отзыв от {self.client_name} о мастере {self.master.name}"
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['rating']),
+            models.Index(fields=['is_published']),
+            models.Index(fields=['master','rating'], name='master_rating_idx'),
+        ]
+    
+
 
 
 
