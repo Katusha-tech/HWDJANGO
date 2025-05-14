@@ -4,7 +4,10 @@ from django.http import HttpResponse
 from .data import * 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from  django.shortcuts import get_object_or_404
 from django.contrib import messages
+from .forms import ReviewForm
+import json
 
 def landing(request):
     masters = Master.objects.all()
@@ -130,3 +133,67 @@ def service_create(request):
     
     # Этот блок выполнится только при нестандартных HTTP методах
     return HttpResponse(f"Ошибка: для создания услуги используйте форму на сайте.", status=405)
+
+# Проверить 
+
+def masters_info(request, master_id=None):
+    if master_id is None:
+        data = json.load(request.body)
+        master_id = data.get('master_id') 
+
+    master = get_object_or_404(Master, id=master_id)
+
+    master_data = []
+
+    for master in masters:
+        master_data.append({
+            'id': master.id,
+            'name': master.name,
+            'photo': master.photo.url if master.photo else None,
+            'description': master.description,
+            'services': [service.name for service in master.services.all()]
+        })
+
+        return HttpResponse(
+            json.dumps(master_data, ensure_ascii=False, indent = 4), 
+            content_type='application/json',
+            )
+
+def create_review(request):
+    if request.method == 'GET':
+        form = ReviewForm()
+        masters = Master.objects.all()
+
+        context = {
+            'title': 'Создание отзыва',
+            'form': form,
+            'masters': masters,
+            'button_text': 'Создать',
+        }
+        return render(request, 'core/review_form.html', context)
+    
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.is_published = False
+            review.save()
+
+            client_name = form.cleaned_data.get('client_name')
+            messages.success(request, f"Отзыв от {client_name} успешно создан и отправлен на модерацию!")
+
+            return redirect("thanks")
+        
+        masters = Master.objects.all()
+        context = {
+            'title': 'Создание отзыва',
+            'form': form,
+            'masters': masters,
+            'button_text': 'Создать',
+        }
+        return render(request, 'core/review_form.html', context)
+
+
+
+
