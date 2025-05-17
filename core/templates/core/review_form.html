@@ -1,74 +1,81 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Добавить отзыв{% endblock %}
+
+{% block title %}
+    <title>Отзыв</title>
+{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow">
-        <div class="card-header bg-danger text-white">
-          <h3 class="card-title mb-0">Добавление отзыва</h3>
+<section class="py-5 zigzag-section">
+    <div class="container-fluid px-4 px-md-5">
+        <h2 class="text-center text-danger fw-bold mb-5">Оставьте ваш отзыв</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="bg-white p-4 rounded shadow-sm border">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="client_name" class="form-label fw-semibold">Имя клиента</label>
+                            <input type="text" class="form-control" id="client_name" name="client_name" value="{{ form_data.client_name|default:'' }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="text" class="form-label fw-semibold">Отзыв<span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="text" name="text" rows="4" required>{{ form_data.text|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="rating" class="form-label fw-semibold">Оценка<span class="text-danger">*</span></label>
+                            <div class="star-rating d-flex">
+                                <div class="text-warning fs-4" id="star-container">
+                                    <input type="hidden" name="rating" id="rating-value" value="{{ form_data.rating|default:'0' }}">
+                                    {% for i in "12345" %}
+                                        <i class="bi bi-star star-rating-item" data-rating="{{ forloop.counter }}"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="master" class="form-label fw-semibold">Мастер<span class="text-danger">*</span></label>
+                            <select class="form-select placeholder-select" id="master" name="master" required>
+                                <option value="" class="placeholder-option">Выберите мастера</option>
+                                {% for m in masters %}
+                                    <option value="{{ m.id }}"
+                                        {% if form_data.master|default:'' == m.id|stringformat:"s" %}selected{% endif %}>
+                                        {{ m.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="photo" class="form-label fw-semibold">Фото</label>
+                            <input type="file" class="form-control" id="photo" name="photo">
+                        </div>
+                        
+                        <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+                            <button type="submit" class="btn btn-dark flex-grow-1">
+                                <i class="bi bi-save me-1"></i> Сохранить отзыв
+                            </button>
+                            <a href="{% url 'landing' %}" class="btn btn-outline-secondary flex-grow-1">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          {% if error %}
-            <div class="alert alert-danger">{{ error }}</div>
-          {% endif %}
-
-          <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div class="mb-3">
-              <label for="client_name" class="form-label">Имя клиента</label>
-              <input type="text" class="form-control" id="client_name" name="client_name"
-                     value="{{ form_data.client_name|default:'' }}">
-            </div>
-
-            <div class="mb-3">
-              <label for="text" class="form-label">Отзыв*</label>
-              <textarea class="form-control" id="text" name="text" rows="4" required>{{ form_data.text|default:'' }}</textarea>
-            </div>
-
-            <div class="mb-3">
-              <label for="rating" class="form-label">Оценка*</label>
-              <div class="star-rating d-flex gap-2">
-                {% for i in "12345" %}
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="rating" id="rating{{ i }}" value="{{ i }}"
-                           {% if form_data.rating|default:'' == i %}checked{% endif %} required>
-                    <label class="form-check-label" for="rating{{ i }}"> {{ i }} ★</label>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="master" class="form-label">Мастер*</label>
-              <select class="form-select" id="master" name="master" required>
-                <option value="">Выберите мастера</option>
-                {% for m in masters %}
-                  <option value="{{ m.id }}"
-                    {% if form_data.master|default:'' == m.id|stringformat:"s" %}selected{% endif %}>
-                    {{ m.name }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-
-            <div class="mb-3">
-              <label for="photo" class="form-label">Фото</label>
-              <input type="file" class="form-control" id="photo" name="photo">
-            </div>
-
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-danger">Сохранить отзыв</button>
-              <a href="{% url 'landing' %}" class="btn btn-outline-secondary">Отмена</a>
-            </div>
-          </form>
-
-        </div>
-      </div>
     </div>
-  </div>
-</div>
+</section>
 {% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/reviews.js' %}"></script>
+{% endblock scripts %}
+
+
+

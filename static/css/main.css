@@ -15,6 +15,7 @@ main {
   flex: 1;
 }
 
+
 /* Стили для секций */
 
 .zigzag-section {
@@ -92,6 +93,7 @@ main {
   max-width: 250px;
   object-fit: contain;
 }
+
 
 .about-quote {
   font-style: italic;
@@ -202,4 +204,16 @@ main {
   height: auto;
   min-height: 250px;
   margin: 0 auto;
+}
+
+/* Стили для выбора оценки 5 звезд  */
+
+.star-rating-item {
+        cursor: pointer;
+        margin-right: 5px;
+        transition: transform 0.1s ease;
+}
+    
+.star-rating-item:hover {
+        transform: scale(1.2);
 }
