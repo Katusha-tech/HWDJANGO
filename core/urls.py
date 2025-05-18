@@ -6,6 +6,7 @@ from .views import (thanks,
                     service_create,
                     masters_info,
                     create_review,
+                    get_master_info,
                 )
 # Эти маршруты будут доступны с префиксом /barbershop/
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path('service_create/', service_create, name='service_create'),
     path('master_detail/<int:master_id>/', masters_info, name='masters_info'),
     path('create_review/', create_review, name='create_review'),
+    path('api/master-info/', get_master_info, name='get_master_info'),
 ]

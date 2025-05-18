@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Master, Service, Review, Order
 from django.http import HttpResponse
+from django.http import JsonResponse
 from .data import * 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -12,7 +13,7 @@ import json
 def landing(request):
     masters = Master.objects.all()
     services = Service.objects.all()
-    reviews = Review.objects.all()
+    reviews = Review.objects.filter(is_published=True)
     for master in masters:
         print(f"Master: {master.name}, Photo: {master.photo}")
 
@@ -25,7 +26,7 @@ def landing(request):
     return render(request, 'core/landing.html', context)
 
 def thanks(request):
-    masters_count = len(masters)
+    masters_count = Master.objects.count()
     context = {
         'masters_count': masters_count
     }
@@ -138,26 +139,23 @@ def service_create(request):
 
 def masters_info(request, master_id=None):
     if master_id is None:
-        data = json.load(request.body)
+        data = json.loads(request.body)
         master_id = data.get('master_id') 
 
     master = get_object_or_404(Master, id=master_id)
 
-    master_data = []
+    master_data = {
+        'id': master.id,
+        'name': master.name,
+        'photo': master.photo.url if master.photo else None,
+        'description': master.description,
+        'services': [{'name': service.name, 'price': service.price} for service in master.services.all()]
+    }
 
-    for master in masters:
-        master_data.append({
-            'id': master.id,
-            'name': master.name,
-            'photo': master.photo.url if master.photo else None,
-            'description': master.description,
-            'services': [service.name for service in master.services.all()]
-        })
-
-        return HttpResponse(
-            json.dumps(master_data, ensure_ascii=False, indent = 4), 
-            content_type='application/json',
-            )
+    return HttpResponse(
+        json.dumps(master_data, ensure_ascii=False, indent = 4), 
+        content_type='application/json',
+        )
 
 def create_review(request):
     if request.method == 'GET':
@@ -184,6 +182,8 @@ def create_review(request):
             messages.success(request, f"Отзыв от {client_name} успешно создан и отправлен на модерацию!")
 
             return redirect("thanks")
+        else:
+            messages.error(request, "Пожалуйста, исправьте ошибки в форме.")
         
         masters = Master.objects.all()
         context = {
@@ -195,5 +195,22 @@ def create_review(request):
         return render(request, 'core/review_form.html', context)
 
 
-
+def get_master_info(request):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        master_id = request.GET.get('master_id')
+        if master_id:
+            try:
+                master = Master.objects.get(pk=master_id)
+                master_data = {
+                    'id': master.id,
+                    'name': f"{master.name}",
+                    'experience': master.experience,
+                    'photo': master.photo.url if master.photo else None,
+                    'services': list(master.services.values('id', 'name', 'price')),
+                }
+                return JsonResponse({'success': True, 'master': master_data})
+            except Master.DoesNotExist:
+                return JsonResponse({'success': False, 'error': 'Мастер не найден'})
+        return JsonResponse({'success': False, 'error': 'Не указан ID мастера'})
+    return JsonResponse({'success': False, 'error': 'Недопустимый запрос'})
 
