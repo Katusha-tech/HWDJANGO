@@ -15,33 +15,53 @@ function initRatingStats() {
 
     stars.forEach(star => {
         star.addEventListener('click', function () {
-            const selectedRating = parseInt(this.getAttribute('data-rating'));
-            const currentRating = parseInt(ratingInput.value || '0');
+            const rating = this.getAttribute("data-rating");
+            ratingInput.value = rating;
 
-            // Если пользователь кликает на ту же звезду — сбрасываем рейтинг
-            const newRating = selectedRating === currentRating ? 0 : selectedRating;
-            ratingInput.value = newRating;
+            // Обновление внешнего вида звездочек
+            updateStars(rating);
+        });
+        
+        // Добавляем эффект при наведении
+        star.addEventListener("mouseover", function () {
+            const hoverRating = this.getAttribute("data-rating");
+            hoverStars(hoverRating);
+        });
 
-            stars.forEach((s, index) => {
-                if (index < newRating) {
-                    s.classList.remove('bi-star');
-                    s.classList.add('bi-star-fill');
-                } else {
-                    s.classList.remove('bi-star-fill');
-                    s.classList.add('bi-star');
-                }
-            });
+        // Возвращаем выбранное состояние при уходе курсора
+        star.addEventListener("mouseout", function () {
+            const currentRating = ratingInput.value || 0;
+            updateStars(currentRating);
         });
     });
 
-    // Установка звёзд при загрузке
-    const initialRating = parseInt(ratingInput.value || '0');
-    stars.forEach((s, index) => {
-        if (index < initialRating) {
-            s.classList.remove('bi-star');
-            s.classList.add('bi-star-fill');
-        }
-    });
+    /* Обновление внешнего вида звездочек при выборе рейтинга*/
+    function updateStars(rating) {
+        stars.forEach((star) => {
+            const starValue = star.getAttribute("data-rating");
+            if (starValue <= rating) {
+                star.classList.remove("bi-star");
+                star.classList.add("bi-star-fill");
+            } else {
+                star.classList.remove("bi-star-fill");
+                star.classList.add("bi-star");
+            }
+        });
+    }
+
+    /*Обновление внешнего вида звездочек при наведении*/
+    function hoverStars(rating) {
+        stars.forEach((star) => {
+            const starValue = star.getAttribute("data-rating");
+            if (starValue <= rating) {
+                star.classList.remove("bi-star");
+                star.classList.add("bi-star-fill");
+            } else {
+                star.classList.remove("bi-star-fill");
+                star.classList.add("bi-star");
+            }
+        });
+    }
 }
 
 /* Отображение информации о мастере */

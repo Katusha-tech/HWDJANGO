@@ -1,37 +1,46 @@
+# Импорт служебных объектов Form
 from typing import Any
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ClearableFileInput
-from .models import Master, Review
+from .models import Service, Master, Order, Review
 
 class ReviewForm(forms.ModelForm):
+    """
+    Форма для создания отзыва о мастере с использованием Bootstrap 5
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Добавляем класс form-control к каждому полю формы
+        for field_name, field in self.fields.items():
+            if (
+                field_name != "rating"
+            ):  # Для рейтинга будет специальная обработка через JS
+                field.widget.attrs.update({"class": "form-control"})
+
+    # Скрытое поле для рейтинга, которое будет заполняться через JS
+    rating = forms.IntegerField(
+        widget=forms.HiddenInput(),
+        required=True,
+    )
+
     class Meta:
         model = Review
-        fields = ['client_name', 'text', 'rating', 'master', 'photo']
-        # Поле is_published исключено из формы для обычных пользователей
+        # Исключаем поле is_published из формы для пользователей
+        exclude = ["is_published"]
         widgets = {
-            'client_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'text': forms.Textarea(attrs={'class': 'form-control'}),
-            'rating': forms.HiddenInput(attrs={'id': 'rating-value'}),  # Скрытое поле для рейтинга
-            'master': forms.Select(attrs={'class': 'form-control'}),
-            'photo': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            "client_name": forms.TextInput(
+                attrs={"placeholder": "Как к вам обращаться?", "class": "form-control"}
+            ),
+            "text": forms.Textarea(
+                attrs={
+                    "placeholder": "Расскажите о своем опыте посещения мастера",
+                    "class": "form-control",
+                    "rows": "3",
+                }
+            ),
+            "photo": forms.FileInput(
+                attrs={"class": "form-control", "accept": "image/*"}
+            ),
         }
-        labels = {
-            'client_name': 'Ваше имя',
-            'text': 'Текст отзыва',
-            'rating': 'Оценка',
-            'master': 'Выберите мастера',
-            'photo': 'Фотография (необязательно)',
-        }
-        help_texts = {
-            'text': 'Расскажите о вашем опыте посещения барбершопа',
-            'rating': 'Оцените качество услуги от 1 до 5',
-            'photo': 'Вы можете прикрепить фотографию к отзыву',
-        }
-
-    def clean_text(self):
-        text = self.cleaned_data.get('text')
-        if len(text) < 10:
-            raise forms.ValidationError('Текст отзыва должен содержать не менее 10 символов')
-        return text
-

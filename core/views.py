@@ -34,16 +34,24 @@ def thanks(request):
 
 @login_required
 def orders_list(request):
-    all_orders = Order.objects.all()
+    if not request.user.is_staff:
+        messages.error(request, "У вас нет доступа к этой странице.")
+        return redirect('landing')
+    
+    # Получаем все заказы с оптимизацией запросов
+    all_orders = Order.objects.select_related("master").prefetch_related("services").all()
+    
+    # Получаем параметры поиска
     search_query = request.GET.get('search', None)
     check_boxes = request.GET.getlist('search_in')
     
+    # Если чекбоксы не выбраны, по умолчанию ищем по имени
     if not check_boxes:
         check_boxes = ['name']
 
     if search_query:
         filters = Q()
-        
+
         if "phone" in check_boxes:
             filters |= Q(phone__icontains=search_query)
 
@@ -52,7 +60,6 @@ def orders_list(request):
 
         if "status" in check_boxes:
             # Поиск по отображаемым значениям статуса
-            status_display_map = dict(Order.STATUS_CHOICES)
             matching_status_codes = []
             
             # Ищем коды статусов, у которых отображаемое значение содержит поисковый запрос
@@ -66,16 +73,17 @@ def orders_list(request):
             else:
                 # Если нет совпадений по отображаемым значениям, 
                 # пробуем искать по коду статуса (для администраторов)
-                filters |= Q(status__icontains=search_query) 
+                filters |= Q(status__icontains=search_query)
 
-        all_orders = all_orders.filter(filters)
+        # Применяем фильтры если они есть
+        if filters:
+            all_orders = all_orders.filter(filters)
 
     context = {
         'title': 'Список заказов',
         'orders': all_orders,
     }
     return render(request, 'core/orders_list.html', context)
-            
 
 @login_required
 def order_detail(request, order_id: int):
@@ -135,8 +143,6 @@ def service_create(request):
     # Этот блок выполнится только при нестандартных HTTP методах
     return HttpResponse(f"Ошибка: для создания услуги используйте форму на сайте.", status=405)
 
-# Проверить 
-
 def masters_info(request, master_id=None):
     if master_id is None:
         data = json.loads(request.body)
@@ -159,7 +165,18 @@ def masters_info(request, master_id=None):
 
 def create_review(request):
     if request.method == 'GET':
-        form = ReviewForm()
+        master_id = request.GET.get('master_id')
+
+        initial_data = {}
+
+        if master_id:
+            try: 
+                master = Master.objects.get(id=master_id)
+                initial_data['master'] = master
+            except Master.DoesNotExist:
+                pass
+
+        form = ReviewForm(initial=initial_data)
         masters = Master.objects.all()
 
         context = {
@@ -170,7 +187,7 @@ def create_review(request):
         }
         return render(request, 'core/review_form.html', context)
     
-    if request.method == 'POST':
+    elif request.method == 'POST':
         form = ReviewForm(request.POST, request.FILES)
 
         if form.is_valid():
@@ -178,12 +195,9 @@ def create_review(request):
             review.is_published = False
             review.save()
 
-            client_name = form.cleaned_data.get('client_name')
-            messages.success(request, f"Отзыв от {client_name} успешно создан и отправлен на модерацию!")
+            messages.success(request, f"Отзыв от успешно создан и отправлен на модерацию!")
 
             return redirect("thanks")
-        else:
-            messages.error(request, "Пожалуйста, исправьте ошибки в форме.")
         
         masters = Master.objects.all()
         context = {
