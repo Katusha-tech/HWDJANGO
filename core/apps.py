@@ -8,3 +8,4 @@ class CoreConfig(AppConfig):
     # метод ready вызызвается при запуске приложения и можно импортировать сигналы
     def ready(self):
         import core.signals
+        

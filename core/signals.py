@@ -3,6 +3,7 @@
 from .models import Review
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from .mistral import moderate_review
 
 @receiver(post_save, sender=Review)
 def check_review_text(sender, instance, created, **kwargs):
@@ -10,7 +11,7 @@ def check_review_text(sender, instance, created, **kwargs):
     Если таких слов нет, то устанавливаем is_published = True
     """
     if created:
-        if "плохо" not in instance.text.lower() or "ужасно" not in instance.text.lower():
+        if moderate_review(instance.text):
             instance.is_published = True
             instance.save()
             # Вывод  в терминал
