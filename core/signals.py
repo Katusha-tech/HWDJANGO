@@ -7,11 +7,11 @@ from .mistral import moderate_review
 
 @receiver(post_save, sender=Review)
 def check_review_text(sender, instance, created, **kwargs):
-    """ Проверяет текст отзыва на налчие слов 'плохо' или 'ужасно'. 
+    """ Проверяет текст отзыва на наличие слов 'плохо' или 'ужасно'. 
     Если таких слов нет, то устанавливаем is_published = True
     """
     if created:
-        if moderate_review(instance.text):
+        if not moderate_review(instance.text):
             instance.is_published = True
             instance.save()
             # Вывод  в терминал

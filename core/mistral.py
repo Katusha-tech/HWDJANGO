@@ -1,6 +1,6 @@
-from barbershopp.settings import MISTRAL_MODERATIONS_GRADES
+from barbershop.settings import MISTRAL_MODERATIONS_GRADES
 import os
-from dottenv import load_dotenv
+from dotenv import load_dotenv
 from mistralai import Mistral
 from pprint import pprint
 load_dotenv()
@@ -16,7 +16,7 @@ def moderate_review(review_text: str, api_key: str = MISTRAL_API_KEY, grades: di
         ],
     )
     result = response.results[0].category_scores
-    result = {key: round(value, 2) for key, value in raw_result.items()}
+    result = {key: round(value, 2) for key, value in result.items()}
 
     pprint(result)
 
@@ -24,4 +24,4 @@ def moderate_review(review_text: str, api_key: str = MISTRAL_API_KEY, grades: di
     for key, value in result.items():
         if key in grades:
             cheked_result[key] = value >= grades[key]
-    return all(cheked_result.values())
+    return any(cheked_result.values())
