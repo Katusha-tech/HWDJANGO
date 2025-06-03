@@ -217,3 +217,17 @@ main {
 .star-rating-item:hover {
         transform: scale(1.2);
 }
+
+/* Стили для формы заказа */
+.order-form-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .order-form-buttons {
+        flex-direction: row;
+    }
+}

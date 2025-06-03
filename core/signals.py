@@ -55,8 +55,7 @@ def telegram_order_notification(sender, instance, created, **kwargs):
         comment = instance.comment
 
         # Формируем сообщение
-        telegram_message = f"""
-*Новый заказ от {client_name}!*
+        telegram_message = f"""*Новый заказ от {client_name}!*
 
 *Телефон:* {phone}
 *Комментарий:* {comment}
@@ -65,7 +64,7 @@ def telegram_order_notification(sender, instance, created, **kwargs):
 """
         # Логика отправки сообщения в Telegram
 
-        run(send_telegram_message(TELEGRAM_BOT_API_KEY, TELEGRAM_USER_ID, telegram_пшеmessage))
+        run(send_telegram_message(TELEGRAM_BOT_API_KEY, TELEGRAM_USER_ID, telegram_message))
 
 
 
@@ -88,19 +87,19 @@ def send_telegram_notification(sender, instance, action, **kwargs):
 
         # Формируем сообщение
 
-        message = f"""
-*Новая запись на услугу!*
+        message = f"""*Новая запись на услугу!*
 
 *Имя:* {instance.client_name}
 *Телефон:* {instance.phone or 'Не указан'}
 *Комментарий:* {instance.comment or 'Не указан'}
 *Услуги:* {', '.join(services) or 'Не указаны'}
-*Дата создания:* {instance.date_created or 'Не указана'}
-*Мастер:* {instance.master.name or 'Не указан'}
-*Желаемая дата:* {instance.appointment_date or 'Не указана'}
+*Дата создания:* {instance.date_created.strftime('%d.%m.%Y %H:%M') if instance.date_created else 'Не указана'}
+*Мастер:* {instance.master.name if instance.master else 'Не указан'}
+*Желаемая дата:* {instance.appointment_date.strftime('%d.%m.%Y %H:%M') if instance.appointment_date else 'Не указана'}
+
 *Ссылка на запись:* http://127.0.0.1:8000/admin/core/order/{instance.id}/change/
         
-#новаязапись #мастер{instance.master.name}
+#новаязапись #мастер{instance.master.name.replace(' ', '').replace('"', '') if instance.master else 'неизвестен'}
 ====================
 """ 
         run(send_telegram_message(TELEGRAM_BOT_API_KEY, TELEGRAM_USER_ID, message))
