@@ -44,3 +44,24 @@ class ReviewForm(forms.ModelForm):
                 attrs={"class": "form-control", "accept": "image/*"}
             ),
         }
+
+class OrderForm(forms.ModelForm):
+    """
+    Форма для создания заказа с использованием Bootstrap 5
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Добавляем класс form-control к каждому полю формы
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({"class": "form-control"})
+    
+    class Meta:
+        model = Order
+        fields = [
+            "client_name",
+            "phone",
+            "comment",
+            "master",
+            "services",
+            "appointment_date",
+        ]

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Запись к мастеру</title>
+{% endblock %}
+
+{% block content %}
+<!-- Добавь контейнер с данными для JavaScript -->
+<div id="order-form-data" 
+    data-services-url="{% url 'masters_services_by_id_ajax' %}" 
+    data-csrf-token="{{ csrf_token }}" 
+    style="display: none;">
+</div>
+
+<section class="py-5 zigzag-section">
+    <div class="container-fluid px-4 px-md-5">
+        <h2 class="text-center text-danger fw-bold mb-5">Запись к мастеру</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="bg-white p-4 rounded shadow-sm border">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="client_name" class="form-label fw-semibold">Имя клиента<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="client_name" name="client_name" value="{{ form_data.client_name|default:'' }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label fw-semibold">Телефон<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="phone" name="phone" value="{{ form_data.phone|default:'' }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="master" class="form-label fw-semibold">Выберите мастера<span class="text-danger">*</span></label>
+                            <select class="form-select" id="master" name="master" required>
+                                <option value="">-- Выберите мастера --</option>
+                                {% for m in masters %}
+                                    <option value="{{ m.id }}" {% if form_data.master|default:'' == m.id|stringformat:"s" %}selected{% endif %}>{{ m.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="services" class="form-label fw-semibold">Услуги<span class="text-danger">*</span></label>
+                            <select class="form-select" id="services" name="services" multiple required>
+                                {% if services %}
+                                    {% for s in services %}
+                                        <option value="{{ s.id }}" {% if s.id|stringformat:"s" in form_data.services|default:"" %}selected{% endif %}>{{ s.name }}</option>
+                                    {% endfor %}
+                                {% else %}
+                                    <option disabled>Сначала выберите мастера</option>
+                                {% endif %}
+                            </select>
+                            <small class="form-text text-muted">Вы можете выбрать несколько услуг</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="appointment_date" class="form-label fw-semibold">Дата и время записи<span class="text-danger">*</span></label>
+                            <input type="datetime-local" class="form-control" id="appointment_date" name="appointment_date" value="{{ form_data.appointment_date|default:'' }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="comment" class="form-label fw-semibold">Комментарий</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="3">{{ form_data.comment|default:'' }}</textarea>
+                        </div>
+
+                        <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+                            <button type="submit" class="btn btn-dark flex-grow-1">
+                                <i class="bi bi-calendar-plus me-1"></i> Записаться
+                            </button>
+                            <a href="{% url 'landing' %}" class="btn btn-outline-secondary flex-grow-1">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'js/order_form.js' %}"></script>
+{% endblock %}

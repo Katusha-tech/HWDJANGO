@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from  django.shortcuts import get_object_or_404
 from django.contrib import messages
-from .forms import ReviewForm
+from .forms import ReviewForm, OrderForm
 import json
 
 def landing(request):
@@ -162,6 +162,93 @@ def masters_info(request, master_id=None):
         json.dumps(master_data, ensure_ascii=False, indent = 4), 
         content_type='application/json',
         )
+
+def masters_services_by_id(request):
+    """
+    Функция для ajax-запросов фронтенда, для подгрузки услуг конкретного мастера в форму
+    m2m выбора услуг при создании заказа
+    """
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            master_id = data.get("master_id")
+            
+            if not master_id:
+                return JsonResponse({'error': 'master_id is required'}, status=400)
+            
+            # получаем мастера по id
+            master = get_object_or_404(Master, id=master_id)
+            
+            # получаем услуги мастера
+            services = master.services.all()
+            
+            # формируем ответ в виде JSON
+            response_data = []
+            
+            for service in services:
+                response_data.append({
+                    'id': service.id,
+                    'name': service.name,
+                    'price': service.price,
+                })
+            
+            return JsonResponse(response_data, safe=False)
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    
+    return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+
+
+def order_create(request):
+    """
+    Представление для создания заказа
+    """
+    if request.method == 'GET':
+        # если метод GET, возвраащем пустую фоорму
+        form = OrderForm()
+
+        masters = Master.objects.all()
+
+        context = {
+            "title": "Создание заказа",
+            "form": form,
+            "masters": masters,
+            "services": [],
+            "button_text": "Записаться",
+        }
+        return render(request, 'core/order_form.html', context)
+
+    if request.method == 'POST':
+        # если метод POST, создаем форму и передаем данные из запроса
+        form = OrderForm(request.POST)
+
+        # если форма валидна:
+        if form.is_valid():
+            # сохраняем форму в БД
+            form.save()
+            client_name = form.cleaned_data['client_name']
+            # даем пользователю уведомление об успешном создании
+            messages.success(
+                request, f"Ваша запись успешно создана, {client_name}! Мы свяжемся с вами для подтверждения!"
+            )
+            # перенаправляем на страницу благодарности с указанием источника
+            return redirect('thanks')
+
+        masters = Master.objects.all()
+
+        # в случае ошибок валидации Django автоматически заполнит form.errors
+        # и отобразит их в шаблоне, поэтому возвращаем форму
+        context = {
+            "title": "Создание заказа",
+            "form": form,
+            "masters": masters,
+            "services": [],
+            "button_text": "Записаться",
+        }
+        return render(request, 'core/order_form.html', context)
 
 def create_review(request):
     if request.method == 'GET':
