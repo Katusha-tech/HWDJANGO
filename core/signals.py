@@ -25,12 +25,13 @@ def check_review_text(sender, instance, created, **kwargs):
             instance.save()
             # Отправка в телеграм
             message = f"""
-*Новый отзыв от клиента!*
+🎉*Новый отзыв от клиента!*🎉
 
-*Имя:* {instance.client_name}
-*Текст:* {instance.text}
-*Оценка:* {instance.rating}
-*Ссылка на отзыв:* http://127.0.0.1:8000/admin/core/review/{instance.id}/change/
+👤*Имя:* {instance.client_name}
+💬*Текст:* {instance.text}
+⭐*Оценка:* {instance.rating}
+
+🔗*Ссылка на отзыв:* http://127.0.0.1:8000/admin/core/review/{instance.id}/change/
 
 #отзыв
 =================
@@ -55,9 +56,9 @@ def telegram_order_notification(sender, instance, created, **kwargs):
         comment = instance.comment
 
         # Формируем сообщение
-        telegram_message = f"""*Новый заказ от {client_name}!*
+        telegram_message = f"""📞*Новый заказ от {client_name}!*📞
 
-*Телефон:* {phone}
+*Телефон:* `{phone}`
 *Комментарий:* {comment}
 *Ссылка на заказ:* http://127.0.0.1:8000/admin/core/order/{instance.id}/change/
 ====================
@@ -65,8 +66,6 @@ def telegram_order_notification(sender, instance, created, **kwargs):
         # Логика отправки сообщения в Telegram
 
         run(send_telegram_message(TELEGRAM_BOT_API_KEY, TELEGRAM_USER_ID, telegram_message))
-
-
 
 # Делаем так же с ожиданием m2m_changed
 # Order.services.through - это промежуточная модель, которая создается автоматически при создании связи многие-ко-многим между Order и Service.
@@ -87,17 +86,17 @@ def send_telegram_notification(sender, instance, action, **kwargs):
 
         # Формируем сообщение
 
-        message = f"""*Новая запись на услугу!*
+        message = f"""✂️ *НОВАЯ ЗАПИСЬ НА УСЛУГУ!* ✂️
 
 *Имя:* {instance.client_name}
-*Телефон:* {instance.phone or 'Не указан'}
-*Комментарий:* {instance.comment or 'Не указан'}
+*Телефон:* `{instance.phone or 'Не указан'}`
+*Комментарий:* _{instance.comment or 'Не указан'}_
 *Услуги:* {', '.join(services) or 'Не указаны'}
 *Дата создания:* {instance.date_created.strftime('%d.%m.%Y %H:%M') if instance.date_created else 'Не указана'}
 *Мастер:* {instance.master.name if instance.master else 'Не указан'}
 *Желаемая дата:* {instance.appointment_date.strftime('%d.%m.%Y %H:%M') if instance.appointment_date else 'Не указана'}
 
-*Ссылка на запись:* http://127.0.0.1:8000/admin/core/order/{instance.id}/change/
+🔗*Ссылка на запись:* http://127.0.0.1:8000/admin/core/order/{instance.id}/change/
         
 #новаязапись #мастер{instance.master.name.replace(' ', '').replace('"', '') if instance.master else 'неизвестен'}
 ====================

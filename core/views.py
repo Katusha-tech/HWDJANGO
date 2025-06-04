@@ -296,6 +296,7 @@ def create_review(request):
         return render(request, 'core/review_form.html', context)
 
 
+
 def get_master_info(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         master_id = request.GET.get('master_id')
