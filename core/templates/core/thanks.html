@@ -7,22 +7,40 @@
             <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5">
                 <div class="alert alert-light border border-danger shadow-sm p-5">
                     <h2 class="text-danger fw-bold mb-4">СПАСИБО!</h2>
+                    {% if source == "order" %}
+                    <!--Текст для создания заказа-->
                     <p class="lead">
-                        Ваша заявка принята. Один из <strong>{{ masters_count }}</strong> мастеров будет рад принять вас в ближайшее время.
+                        Ваша заявка на услугу принята.<br> Мастер будет рад принять вас в выбранное время.
                     </p>
                     <hr>
                     <p class="text-muted small mb-3">Вы сделали правильный выбор — ведь «Зигзаг Удачи» не подводит!</p>
                     <p class="mt-4">Вы будете перенаправлены на главную через <span id="countdown" class="fw-bold text-danger" data-landing-url="{% url 'landing' %}">7</span> секунд.</p>
                     <a href="{% url 'landing' %}" class="btn btn-outline-danger mt-3"><i class="bi bi-house-door me-2"></i> Вернуться сейчас</a>
+                    
+                    {% elif source == "review" %}
+                    <!--Текст для создания отзыва-->
+                    <p class="lead">Ваш отзыв успешно отправлен!</p>
+                    <p class="lead">Мы ценим ваше мнение и благодарим за отзыв.</p>
+                    <p class="mt-4">Вы будете перенаправлены на главную через <span id="countdown" class="fw-bold text-danger" data-landing-url="{% url 'landing' %}">7</span> секунд.</p>
+                    <a href="{% url 'landing' %}" class="btn btn-outline-danger mt-3"><i class="bi bi-house-door me-2"></i> Вернуться сейчас</a>
+                    {% else %}
+                    <p class="lead">Операция выполнена успешно!</p>
+                    <a href="{% url 'landing' %}" class="btn btn-outline-danger mt-3"><i class="bi bi-house-door me-2"></i> Вернуться сейчас</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </section>
 {% endblock content %}
+
 {% block scripts %}
 {{ block.super }}
+{% if source == "review" or source == "order" %}
 <script>
     {% include "core/js/thanks_counter_time.js" %}
 </script>
+{% endif %}
 {% endblock scripts %}
+
+

@@ -16,6 +16,8 @@ class Service(models.Model):
         return self.name
     
     class Meta:
+        verbose_name = "Услуга"
+        verbose_name_plural = "Услуги"
         indexes = [
             models.Index(fields=['price']),
             models.Index(fields=['is_popular']),

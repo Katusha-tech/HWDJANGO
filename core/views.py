@@ -27,8 +27,10 @@ def landing(request):
 
 def thanks(request):
     masters_count = Master.objects.count()
+    source = request.GET.get('source', 'default')
     context = {
-        'masters_count': masters_count
+        'masters_count': masters_count,
+        'source': source,
     }
     return render(request, 'core/thanks.html', context)
 
@@ -235,7 +237,7 @@ def order_create(request):
                 request, f"Ваша запись успешно создана, {client_name}! Мы свяжемся с вами для подтверждения!"
             )
             # перенаправляем на страницу благодарности с указанием источника
-            return redirect('thanks')
+            return redirect('/barbershop/thanks/?source=order')
 
         masters = Master.objects.all()
 
@@ -284,7 +286,7 @@ def create_review(request):
 
             messages.success(request, f"Отзыв от успешно создан и отправлен на модерацию!")
 
-            return redirect("thanks")
+            return redirect("/barbershop/thanks/?source=review")
         
         masters = Master.objects.all()
         context = {

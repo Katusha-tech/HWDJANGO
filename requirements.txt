@@ -1,0 +1,6 @@
+django
+mistralai
+markdown
+python-dotenv
+django-extensions
+python-telegram-bot
