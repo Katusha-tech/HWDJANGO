@@ -139,8 +139,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-LOGIN_URL = '/admin/'
+#LOGIN_URL = '/admin/'
+# Настройка маршрута для авторизации
+LOGIN_URL = 'users:login' # имя маршрута для страницы входа
+LOGIN_REDIRECT_URL = 'landing' # маршрут, на который будет перенаправлен пользователь после успешной авторизации
+LOGOUT_REDIRECT_URL = 'landing' # маршрут, на который будет перенаправлен пользователь после выхода из аккаунта
 
 
 MISTRAL_MODERATIONS_GRADES = {

@@ -5,5 +5,7 @@ from . import views # Представления мы создадим позж�
 app_name = 'users' # Пространство имен для URL-адресов этого приложения
 
 urlpatterns = [
-    # Маршруты для регистрации, входа и выхода будут добавлены здесь на Этапе 5
+    path('register/', views.register_view, name='register'),
+    path('login/', views.login_view, name='login'), #Используем FBV login_view
+    path('logout/', views.logout_view, name='logout'),
 ]
