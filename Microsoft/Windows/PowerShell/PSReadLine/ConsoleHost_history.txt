@@ -18,3 +18,8 @@ git config user.name
 git config user.email
 git init
 git add .
+git commit -m "hw_45: настроены приложения и маршруты, есть реализация форм, реализация представлений на основе классов cbv, созданы и интегрированы шаблоны"`
+git push origin master
+poetry run python ./manage.py runserver
+git init
+git add .
