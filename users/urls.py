@@ -1,11 +1,11 @@
 from django.urls import path
-from . import views # Представления мы создадим позже
+from . import views
 
 
 app_name = 'users' # Пространство имен для URL-адресов этого приложения
 
 urlpatterns = [
-    path('register/', views.register_view, name='register'),
-    path('login/', views.login_view, name='login'), #Используем FBV login_view
-    path('logout/', views.logout_view, name='logout'),
+    path('register/', views.UserRegisterView.as_view(), name='register'),
+    path('login/', views.UserLoginView.as_view(), name='login'),
+    path('logout/', views.UserLogoutView.as_view(), name='logout'),
 ]

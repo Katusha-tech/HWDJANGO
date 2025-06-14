@@ -1,0 +1,20 @@
+poetry run python ./manage.py runserver
+poetry --version
+pip install poetry
+poetry run python ./manage.py runserver
+Get-ChildItem env: | Out-File "C:\Users\15CB~1\AppData\Local\Temp\tmp-19668N0F7Cwe76968.txt"
+poetry run python ./manage.py
+poetry run python ./manage.py runserver
+git init
+git add .
+git commit -m "hw_45: настроены приложения и маршруты, есть реализация форм, реализация представлений на основе классов cbv, созданы и интегрированы шаблоны "
+git push origin master
+git config --global user.name "Katusha-tech"`
+
+git config --global user.name "katusha-tech"
+git config user.name "Katusha-tech"`
+git config user.email "katusha15866@gmail.com"
+git config user.name
+git config user.email
+git init
+git add .
