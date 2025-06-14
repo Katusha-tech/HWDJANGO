@@ -23,3 +23,8 @@ git push origin master
 poetry run python ./manage.py runserver
 git init
 git add .
+git commit -m "hw: исправление незначительных ошибок в order_form.js и reviews.js"
+git push origin master
+poetry run python ./manage.py runserver
+git init 
+git add .
