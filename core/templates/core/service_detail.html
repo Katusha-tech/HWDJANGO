@@ -1,0 +1,12 @@
+{% extend "base.html"%}
+{% load static %}
+
+{% block content %}
+<h1>{{ service.name }}</h1>
+<p>{{ service.description }}</p>
+<p>Цена: {{ service.price }} руб.</p>
+<p>Время выполнения: {{ service.duration }} мин.</p>
+{% if service.image %}
+    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="img-fluid">
+{% endif %}
+{% endblock content %}

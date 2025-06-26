@@ -28,3 +28,8 @@ git push origin master
 poetry run python ./manage.py runserver
 git init 
 git add .
+git commit -m "hw: окончательная версия order_form.js "
+git push origin master
+poetry run python ./manage.py runserver
+git init
+git add .

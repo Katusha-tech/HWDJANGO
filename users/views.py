@@ -1,11 +1,11 @@
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import CreateView
+from django.views.generic.edit import CreateView
 from django.contrib.auth import login # для автоматического входа пользователя после регистрации
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.shortcuts import redirect
-
+# Импорт служебных вью для сроса и восстановления пароля
 
 class UserRegisterView(CreateView):
     form_class = UserRegisterForm
@@ -25,15 +25,11 @@ class UserRegisterView(CreateView):
         # self.object теперь содержит созданного пользователя
         user = self.object 
         login(self.request, user) # Автоматический вход
-        messages.success(
-            self.request, f'Добро пожаловать, {user.username}! Регистрация прошла успешно.'
-            )
+        messages.success(self.request, f'Добро пожаловать, {user.username}! Регистрация прошла успешно.')
         return response # Возвращаем HTTP-ответ (редирект на success_url)
 
     def form_invalid(self, form):
-        messages.error(
-            self.request, 'Пожалуйста, исправьте ошибки в форме регистрации.'
-            )
+        messages.error(self.request, 'Пожалуйста, исправьте ошибки в форме регистрации.')
         return super().form_invalid(form)
     
     def get_context_data(self, **kwargs):
@@ -52,9 +48,7 @@ class UserLoginView(LoginView):
         return next_url or reverse_lazy('landing')
 
     def form_invalid(self, form):
-        messages.error(
-            self.request, 'Неверное имя пользователя или пароль. Попробуйте снова.'
-            )
+        messages.error(self.request, 'Неверное имя пользователя или пароль. Попробуйте снова.')
         return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):

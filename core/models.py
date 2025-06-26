@@ -8,8 +8,8 @@ class Service(models.Model):
     name = models.CharField(max_length=200, verbose_name="Название")
     description = models.TextField(blank=True, verbose_name="Описание")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
-    duration = models.PositiveIntegerField(verbose_name="Длительность", help_text="Время выполнения в минутах", default=60)
-    is_popular = models.BooleanField(default=False, verbose_name="Популярная услуга")
+    duration = models.PositiveIntegerField(verbose_name="Длительность", help_text="Время выполнения в минутах", default=60, blank=True)
+    is_popular = models.BooleanField(default=False, verbose_name="Популярная услуга", blank=True)
     image = models.ImageField(upload_to="images/services/", blank=True, null=True, verbose_name="Изображение",)
 
     def __str__(self):
