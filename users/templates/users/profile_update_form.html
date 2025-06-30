@@ -1,0 +1,44 @@
+{% extends "users/account_base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} - {{ block.super }}{% endblock %}
+
+{% block account_content %}
+<div class="p-3 bg-white rounded shadow-sm" style="max-width: 700px; margin: 0 auto;">
+  <h2 class="text-danger fw-bold mb-4 text-center">{{ title }}</h2>
+
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+          <p class="mb-0">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% for field in form %}
+      <div class="mb-3">
+        <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}
+          <small class="form-text text-muted">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <div class="alert alert-danger mt-1 p-1 small" role="alert">
+            {{ error }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-danger">
+      <i class="bi bi-save me-1"></i> Сохранить изменения
+    </button>
+    <a href="{% url 'users:profile_detail' pk=request.user.pk %}" class="btn btn-secondary ms-2">
+      Отмена
+    </a>
+  </form>
+</div>
+{% endblock account_content %}

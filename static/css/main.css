@@ -1,8 +1,16 @@
+
 /* Общие стили */
 body {
+  font-family: 'Oswald', sans-serif !important;
+  color: #2a2a2a !important;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.container, main, header, footer, section, .bg-white, .card, form {
+  font-family: inherit;
+  color: inherit;
 }
 
 .container {
@@ -231,3 +239,10 @@ main {
         flex-direction: row;
     }
 }
+
+/* Стили для profile_detail*/
+.profile-info p {
+  margin-bottom: 0.25rem !important;
+  line-height: 1.3 !important;
+}
+

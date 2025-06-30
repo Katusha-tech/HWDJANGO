@@ -1,0 +1,17 @@
+<div class="card mb-4 shadow-sm me-4">
+  <div class="card-header bg-light text-dark fw-bold">
+    Профиль
+  </div>
+  <div class="list-group list-group-flush">
+    <a href="{% url 'users:profile_detail' pk=user.pk %}"
+       class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'profile_detail' %}active text-white bg-danger border-danger{% endif %}"
+       id="profile-info-link">
+      <i class="bi bi-person-circle me-2"></i>Информация о пользователе
+    </a>
+    <a href="{% url 'users:password_change' %}"
+       class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'password_change' %}active text-white bg-danger border-danger{% endif %}"
+       id="change-password-link">
+      <i class="bi bi-key-fill me-2"></i>Сменить пароль
+    </a>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+{% extends "users/account_base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} - {{ block.super }}{% endblock %}
+
+{% block account_content %}
+<div class="p-3 bg-white rounded shadow-sm" style="max-width: 700px; margin: 0 auto;">
+  <h2 class="text-danger fw-bold mb-4 text-center">{{ title }}</h2>
+
+  <div class="d-flex gap-4 align-items-start">
+    <div>
+      {% if profile_user.avatar %}
+        <img src="{{ profile_user.avatar.url }}" alt="Аватар {{ profile_user.username }}" class="img-thumbnail mb-3" style="max-width: 150px;">
+      {% else %}
+        <p><small>Аватар не загружен</small></p>
+      {% endif %}
+    </div>
+
+    <div class="profile-info">
+      <p><strong>Имя пользователя:</strong> {{ profile_user.username }}</p>
+      <p><strong>Email:</strong> {{ profile_user.email }}</p>
+      {% if profile_user.birth_date %}
+        <p><strong>Дата рождения:</strong> {{ profile_user.birth_date|date:"d.m.Y" }}</p>
+      {% endif %}
+      {% if profile_user.telegram_id %}
+        <p><strong>Telegram ID:</strong> {{ profile_user.telegram_id }}</p>
+      {% endif %}
+      {% if profile_user.github_id %}
+        <p><strong>GitHub ID:</strong> {{ profile_user.github_id }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if is_own_profile %}
+    <div class="mt-4 text-center">
+      <a href="{% url 'users:profile_edit' %}" class="btn btn-danger">
+        <i class="bi bi-pencil-square me-1"></i> Редактировать профиль
+      </a>
+    </div>
+  {% endif %}
+</div>
+{% endblock account_content %}

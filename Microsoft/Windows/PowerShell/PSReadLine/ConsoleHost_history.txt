@@ -43,3 +43,111 @@ poetry run python ./manage.py migrate
 poetry run python ./manage.py runserver
 git init
 git add .
+git commit -m "hw_47: есть созданная модель users, views.py сделан, формы сделаны, прописаны маршруты, шаблон login.html,register.html, шаблон models.py сделан, были накатаны миграции, и восстановлена БД"
+git push origin master
+poetry run python ./manage.py runserver
+poetry run python ./manage.py migration
+poetry run python ./manage.py makemigrations
+poetry run python manage.py showmigrations`
+
+poetry run python manage.py migrate users 0001_initial`
+
+poetry run python manage.py migrate users 0001_initial --fake
+poetry run python manage.py migrate admin 0001_initial --fake`
+
+poetry run python ./manage.py migrate
+poetry run python ./manage.py showmigrations
+poetry run python ./manage.py runserver
+poetry run python manage.py makemigrations users`
+
+poetry run python manage.py migrate users`
+
+poetry run python manage.py dumpdata --exclude auth.permission --exclude contenttypes --exclude admin.logentry --exclude sessions.session > all_data.json`
+
+poetry run python manage.py dumpdata --exclude users --exclude auth.permission --exclude contenttypes --exclude admin.logentry --exclude sessions.session > all_data.json`
+
+del db.sqlite3`
+
+rd /s /q users\migrations`
+
+Remove-Item -Recurse -Force users\migrations`
+
+mkdir users\migrations`
+New-Item users\migrations\__init__.py -ItemType File`
+
+poetry run python manage.py makemigrations
+poetry run python manage.py migrate
+poetry run python manage.py loaddata all_data.json`
+
+poetry run python -c "from django.core.management import call_command; call_command('dumpdata', exclude=['auth.permission', 'contenttypes', 'admin.logentry', 'sessions.session'], stdout=open('all_data.json', 'w', encoding='utf-8'))"`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python -c "from django.core.management import call_command; call_command('dumpdata', exclude=['auth.permission', 'contenttypes', 'admin.logentry', 'sessions.session'], stdout=open('all_data.json', 'w', encoding='utf-8'))"`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python manage.py dumpdata --exclude users --exclude auth.permission --exclude contenttypes --exclude admin.logentry --exclude sessions.session | Out-File -Encoding utf8 all_data.json`
+
+poetry run python manage.py loaddata all_data.json`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python manage.py dumpdata --exclude users --exclude auth.permission --exclude contenttypes --exclude admin.logentry --exclude sessions.session | Out-File -Encoding utf8 all_data.json`
+
+poetry run python manage.py loaddata all_data.json`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python -c "import codecs; data=codecs.open('all_data.json','r','utf-8-sig').read(); open('all_data_no_bom.json','w', encoding='utf-8').write(data)"`
+
+poetry run python manage.py loaddata all_data_no_bom.json`
+
+poetry run python ./manage.py runserver
+poetry run python manage.py shell`
+
+poetry run python manage.py showmigrations users`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python manage.py dumpdata | Out-File -Encoding utf8 -NoBom full_data.json`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python manage.py dumpdata | Set-Content -Encoding utf8 full_data.json`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python manage.py dumpdata --exclude users | Set-Content -Encoding utf8 full_data.json`
+
+del db.sqlite3`
+Remove-Item -Recurse -Force users\migrations`
+mkdir users\migrations`
+New-Item users\migrations\__init__.py -ItemType File`
+
+poetry run python manage.py makemigrations`
+poetry run python manage.py migrate`
+
+poetry run python manage.py loaddata full_data.json`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python -c "import codecs; data=codecs.open('full_data.json','r','utf-8-sig').read(); open('full_data_no_bom.json','w', encoding='utf-8').write(data)"`
+
+poetry run python manage.py loaddata full_data_no_bom.json`
+
+$env:DJANGO_SETTINGS_MODULE="barbershop.settings"; poetry run python manage.py dumpdata core --indent 2 | Set-Content -Encoding utf8 core_data.json`
+
+poetry run python manage.py loaddata core_data.json`
+
+poetry run python extract_core_data.py`
+
+poetry run python manage.py loaddata core_only.json`
+
+poetry run python ./manage.py runserver
+poetry run python manage.py shell`
+from core.models import Review`
+print(Review.objects.first().text)`
+
+poetry run python manage.py shell`
+
+poetry run python fix_encoding.py`
+
+poetry run python fix_encoding_v2.py`
+
+poetry run python fix_mojibake.py`
+
+poetry run python manage.py dbshell`
+
+poetry run python manage.py shell`
+
+poetry run python ./manage.py runserver
+poetry run python manage.py createsuperuser`
+
+poetry run python ./manage.py runserver
+git init
+git add .

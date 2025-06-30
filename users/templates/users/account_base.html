@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="section-content py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-3 mx-auto">
+      {% include "users/account_menu_include.html" %}
+    </div>
+    <div class="col-md-6 mx-auto">
+      {% block account_content %}{% endblock account_content %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

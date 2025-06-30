@@ -168,3 +168,4 @@ TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID")
 
 AUTH_USER_MODEL = 'users.User'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
