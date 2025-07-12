@@ -246,3 +246,32 @@ main {
   line-height: 1.3 !important;
 }
 
+/* Стили для пагинатора */
+/* Переопределяем цвета Bootstrap-пагинации под тёмный футер */
+.pagination .page-link {
+  color: #000 !important;             /* неактивная страница: тёмный текст */
+}
+
+.pagination .page-link:hover,
+.pagination .page-link:focus {
+  color: #000 !important;             /* оставляем тёмным и при ховере */
+}
+
+.page-item.active .page-link {
+  background-color: #000 !important;  /* активная страница: тёмная заливка */
+  border-color: #000 !important;
+  color: #fff !important;             /* контрастный белый текст */
+}
+
+.page-item.active .page-link:hover,
+.page-item.active .page-link:focus {
+  background-color: #000 !important;
+  border-color: #000 !important;
+  color: #fff !important;
+}
+
+/* если хотите оставить тёмную обводку */
+.pagination .page-link:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 0.25rem rgba(0,0,0,0.4) !important; /* чёрная полупрозрачная обводка */
+}

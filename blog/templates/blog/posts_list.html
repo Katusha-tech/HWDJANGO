@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load cache %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>Блог барбершопа "Арбуз"</h1>
+    </div>
+    <div class="row">
+        <div class="col-12">
+        {% for post in posts %}
+            {% cache 20 post.id %}
+                {% include "./post_card_include.html" %}
+            {% endcache %}
+        {% endfor %}
+        </div>
+    </div>
+    {% if page_obj.has_other_pages %}
+    <div class="paginator">
+    <nav>
+        <ul class="pagination pagination-lg justify-content-center">
+        {% for page in page_obj.paginator.page_range %}
+            {% comment %} Проверяем является ли страница текущей {% endcomment %}
+            {% if page == page_obj.number %}
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">{{ page }}</span>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

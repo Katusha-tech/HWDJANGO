@@ -11,6 +11,7 @@ urlpatterns = [
     # Подключаем маршруты из приложения core
     path('barbershop/', include('core.urls')),
     path('users/', include('users.urls')),
+    path('blog/', include('blog.urls')),
 ]
 
 if settings.DEBUG:

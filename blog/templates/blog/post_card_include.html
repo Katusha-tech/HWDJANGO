@@ -1,0 +1,38 @@
+{% load cache %}
+{% cache 20 post.id %}
+<div class="card mb-4">
+  {% if post.cover %}
+    <img src="{{ post.cover.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+  {% endif %}
+  
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <div class="card-text">{{ post.html_description|safe }}</div>
+  </div>
+  
+  <div class="card-footer bg-white border-0 d-flex justify-content-between">
+    <div>
+      <span class="me-3" title="Лайки">
+        {% cache 10 "post" %}
+        <i class="bi bi-heart text-danger"></i> {{ post.likes.count }}
+        {% endcache %}
+      </span>
+      <span title="Комментарии">
+        {% cache 10 "post-1" %}
+        <i class="bi bi-chat text-primary"></i> {{ post.comments.count }}
+        {% endcache %}
+      </span>
+    </div>
+    {% comment %} Добавим вывод хештегов поста {% endcomment %}
+    <div>
+        {% for tag  in post.tags.all %}
+        <span class="badge bg-secondary me-1">#{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+    <div>
+      <i class="bi bi-calendar"></i> 
+      <small class="text-muted">{{ post.created_at|date:"d.m.Y" }}</small>
+    </div>
+  </div>
+</div>
+{% endcache %}

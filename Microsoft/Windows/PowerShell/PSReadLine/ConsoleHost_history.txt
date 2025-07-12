@@ -151,3 +151,17 @@ poetry run python manage.py createsuperuser`
 poetry run python ./manage.py runserver
 git init
 git add .
+git commit -m "hw_47: доделала все шаблоны под стиль сайта "
+git push origin master
+poetry run python ./manage.py runserver
+poetry run python ./manage.py startapp blog
+poetry add unidecode
+poetry add markdown
+poetry run python .\manage.py makemigrations
+poetry run python ./manage.py
+poetry run python ./manage.py makemigrations
+poetry run python ./manage.py migrate
+poetry run python ./manage.py runserver
+poetry run python manage.py makemigrations
+poetry run python manage.py migrate
+poetry run python ./manage.py runserver
