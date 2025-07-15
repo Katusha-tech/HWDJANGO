@@ -11,6 +11,10 @@
           <a class="nav-link" href="{% url item.url_name %}">{{ item.name }}</a>
         </li>
         {% endfor %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog:posts_list' %}">Блог</a>
+        </li>
         
         <li class="nav-item">
           <a class="nav-link" href="{% url 'landing' %}#about">О нас</a>

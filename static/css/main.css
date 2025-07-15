@@ -246,32 +246,50 @@ main {
   line-height: 1.3 !important;
 }
 
-/* Стили для пагинатора */
-/* Переопределяем цвета Bootstrap-пагинации под тёмный футер */
+/* Пагинация в стиле "Зигзаг удачи" */
+
+.pagination {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem; 
+}
+
 .pagination .page-link {
-  color: #000 !important;             /* неактивная страница: тёмный текст */
+  color: #2a2a2a !important; /* темный текст */
+  border: 2px solid #c62828; /* красная рамка */
+  margin: 0 0.25rem;
+  padding: 0.3rem 0.5rem;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 0.25rem;
 }
 
 .pagination .page-link:hover,
 .pagination .page-link:focus {
-  color: #000 !important;             /* оставляем тёмным и при ховере */
+  background-color: #c62828 !important;
+  color: #fff !important;
+  text-decoration: none;
+  box-shadow: none;
 }
 
 .page-item.active .page-link {
-  background-color: #000 !important;  /* активная страница: тёмная заливка */
-  border-color: #000 !important;
-  color: #fff !important;             /* контрастный белый текст */
-}
-
-.page-item.active .page-link:hover,
-.page-item.active .page-link:focus {
-  background-color: #000 !important;
-  border-color: #000 !important;
+  background-color: #c62828 !important;
+  border-color: #c62828 !important;
   color: #fff !important;
+  font-weight: 700;
+  cursor: default;
+  box-shadow: none;
 }
 
-/* если хотите оставить тёмную обводку */
 .pagination .page-link:focus {
   outline: none !important;
-  box-shadow: 0 0 0 0.25rem rgba(0,0,0,0.4) !important; /* чёрная полупрозрачная обводка */
+  box-shadow: 0 0 0 0.2rem rgba(198, 40, 40, 0.4) !important; /* красная полупрозрачная обводка */
 }
+
+.post-card {
+  max-width: 720px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+

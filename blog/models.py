@@ -45,12 +45,12 @@ class Tag(models.Model):
 
         super().save(*args, **kwargs)
 
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return self.name
         
-        class Meta:
-            verbose_name = 'Тег'
-            verbose_name_plural = 'Теги'
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
 
 class Post(models.Model):
     """Модель поста"""
@@ -80,13 +80,13 @@ class Post(models.Model):
 
             super().save(*args, **kwargs)
 
-        def __str__(self):
-            return self.title
+    def __str__(self):
+        return self.title
         
-        class Meta:
-            verbose_name = 'Пост'
-            verbose_name_plural = 'Посты'
-            ordering = ['-created_at']
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
+        ordering = ['-created_at']
 
 class Comment(models.Model):
     """Модель комментария"""
